@@ -1,6 +1,6 @@
 pub mod functions;
 use clap::Parser;
-use functions::TransactionUpdate;
+use functions::transaction_update;
 
 #[derive(Parser, Debug)]
 struct Cli {
@@ -15,7 +15,7 @@ struct Cli {
 fn main() {
     let args = Cli::parse();
     let amount_in_float: f64 = args.amount.parse().expect("Invalid Amount");
-    TransactionUpdate::transaction_update(&args.user, &args.transaction_type, amount_in_float)
+    transaction_update::transaction_update(&args.user, &args.transaction_type, amount_in_float)
         .unwrap_or_else(|error| {
             panic!("Error in transaction {}", error);
         });

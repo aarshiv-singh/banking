@@ -2,40 +2,40 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Transaction {
-    pub S_No: usize,
+    pub s_no: usize,
     pub transaction_type: String,
     pub transaction_amount: f64,
     pub balance: f64,
-    pub timeStamp: String,
+    pub time_stamp: String,
 }
 
 pub fn build_transaction(
-    S_No: usize,
+    s_no: usize,
     transaction_type: String,
     transaction_amount: f64,
     balance: f64,
-    timeStamp: String,
+    time_stamp: String,
 ) -> Transaction {
     Transaction {
-        S_No,
+        s_no,
         transaction_type,
         transaction_amount,
         balance,
-        timeStamp,
+        time_stamp,
     }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Data {
-    pub S_no: usize,
+    pub s_no: usize,
     pub user_name: String,
-    pub Amount: f64,
+    pub amount: f64,
 }
 
-pub fn build_user(S_no: usize, user_name: String, Amount: f64) -> Data {
+pub fn build_user(s_no: usize, user_name: String, amount: f64) -> Data {
     Data {
-        S_no,
+        s_no,
         user_name,
-        Amount,
+        amount,
     }
 }

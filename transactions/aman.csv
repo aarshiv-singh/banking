@@ -1,3 +1,0 @@
-S_No,transaction_type,transaction_amount,balance,timeStamp
-1,credit,200.0,200.0,2022-5-18 14:45:7
-2,debit,200.0,0.0,2022-5-18 14:45:32

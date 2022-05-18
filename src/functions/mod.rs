@@ -1,4 +1,4 @@
-pub mod CsvFunction;
-pub mod PathVariables;
-pub mod Structures;
-pub mod TransactionUpdate;
+pub mod csv_function;
+pub mod path_variables;
+pub mod structures;
+pub mod transaction_update;

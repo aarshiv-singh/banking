@@ -1,4 +1,4 @@
-use crate::functions::Structures::{Data, Transaction};
+use crate::functions::structures::{Data, Transaction};
 use csv;
 use std::{self, error::Error};
 
