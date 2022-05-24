@@ -1,45 +1,68 @@
 use crate::functions::structures::{Data, Transaction};
 use csv;
-use std::{self, error::Error};
 
-pub fn data_reader(path: &str) -> Result<Vec<Data>, Box<dyn Error>> {
-    let mut reader = csv::Reader::from_path(path)?;
-    let mut vector = vec![];
-
-    for result in reader.deserialize() {
-        let record: Data = result?;
-        vector.push(record);
-    }
-    Ok(vector)
+pub fn data_reader(path: &str) -> Vec<Data> {
+    // let mut vector = vec![];
+    // for result in reader.deserialize() {
+    //     let record: Data = result?;
+    //     vector.push(record);
+    // }
+    // Ok(vector)
+    let mut reader = csv::Reader::from_path(path).expect("cannot read file");
+    reader
+        .deserialize()
+        .into_iter()
+        .map(|result| {
+            let record: Data = result.expect("Could not deserialize the transaction");
+            record
+        })
+        .collect::<Vec<Data>>()
 }
 
-pub fn data_writer(path: &str, vector: Vec<Data>) -> Result<(), Box<dyn Error>> {
-    let mut writer = csv::Writer::from_path(path)?;
-
-    for record in vector {
-        writer.serialize(&record)?;
-    }
-
-    Ok(())
+pub fn data_writer(path: &str, vector: Vec<Data>) {
+    // for record in vector {
+    //     writer.serialize(&record)?;
+    // }
+    // Ok(())
+    let mut writer = csv::Writer::from_path(path).expect("Cannot open file");
+    vector
+        .into_iter()
+        //using for each instead of map since iterators are lazy and we do not need to return anything
+        .for_each(|record| writer.serialize(&record).expect("Cannot write to CSV"));
 }
 
-pub fn transaction_reader(path: &str) -> Result<Vec<Transaction>, Box<dyn Error>> {
-    let mut reader = csv::Reader::from_path(path)?;
-    let mut vector = vec![];
+pub fn transaction_reader(path: &str) -> Vec<Transaction> {
+    let mut reader = csv::Reader::from_path(path).expect("cannot read file");
+    // let mut vector = vec![];
+    // for result in reader.deserialize() {
+    //     let record: Transaction = result?;
+    //     vector.push(record)
+    // }
+    // Ok(vector)
 
-    for result in reader.deserialize() {
-        let record: Transaction = result?;
-        vector.push(record)
-    }
-    Ok(vector)
+    // since the user_data.csv is the main storage, you want to end the program
+    // if there is any problem with it. Also try to user iterators for for loops
+    // as it is idiomatic as well as performant
+
+    reader
+        .deserialize()
+        .into_iter()
+        .map(|result| {
+            let record: Transaction = result.expect("Could not deserialize the transaction");
+            record
+        })
+        .collect::<Vec<Transaction>>()
 }
 
-pub fn transaction_writer(path: &str, vector: Vec<Transaction>) -> Result<(), Box<dyn Error>> {
-    let mut writer = csv::Writer::from_path(path)?;
+pub fn transaction_writer(path: &str, vector: Vec<Transaction>) {
+    let mut writer = csv::Writer::from_path(path).expect("Cannot open file");
 
-    for record in vector {
-        writer.serialize(&record)?;
-    }
+    // for record in vector {
+    //     writer.serialize(&record)?;
+    // }
+    // Ok(())
 
-    Ok(())
+    vector
+        .into_iter()
+        .for_each(|record| writer.serialize(&record).expect("Cannot write to CSV"));
 }
