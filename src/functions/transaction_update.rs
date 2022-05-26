@@ -19,34 +19,30 @@ pub fn transaction_update(user: &str, transaction_type: TransactionType, amount:
     let mut writer = csv::Writer::from_path(&data_path).expect("Cannot open file");
     //writing data_csv to user_data.csv, if the user is found in data_csv, update the data and write it to csv
     //otherwise append the new data in the user_csv (line 42)
-    data_csv
-        .into_iter()
-        .for_each(|mut record| {
-            if record.user_name.eq(user) {
-                user_found = true;
-                let initial_amount = record.amount;
-                let final_amount = amount_update(&transaction_type, amount, initial_amount);
-                record.amount = final_amount.unwrap();
-                transaction_csv.push(Transaction::new(
-                    transaction_csv.len() + 1,
-                    transaction_type.to_string(),
-                    amount,
-                    record.amount,
-                    timestamp(),
-                ));
-            }
-            writer.serialize(&record).expect("Cannot write to CSV");
+    data_csv.into_iter().for_each(|mut record| {
+        if record.user_name.eq(user) {
+            user_found = true;
+            let initial_amount = record.amount;
+            let final_amount = amount_update(&transaction_type, amount, initial_amount);
+            record.amount = final_amount.unwrap();
+            transaction_csv.push(Transaction::new(
+                transaction_csv.len() + 1,
+                transaction_type.to_string(),
+                amount,
+                record.amount,
+                timestamp(),
+            ));
+        }
+        writer.serialize(&record).expect("Cannot write to CSV");
     });
-    
+
     if !user_found {
         let initial_amount = 0.0;
         let final_amount = amount_update(&transaction_type, amount, initial_amount).unwrap();
-        writer.serialize(&Data::new(
-            dlen + 1,
-            user.to_string(),
-            final_amount,
-        )).expect("Cannot write to CSV");
-        
+        writer
+            .serialize(&Data::new(dlen + 1, user.to_string(), final_amount))
+            .expect("Cannot write to CSV");
+
         transaction_csv.push(Transaction::new(
             1,
             transaction_type.to_string(),
