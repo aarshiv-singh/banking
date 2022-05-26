@@ -10,26 +10,6 @@ pub struct Transaction {
     pub time_stamp: String,
 }
 
-// pub fn build_transaction(
-//     s_no: usize,
-//     transaction_type: String,
-//     transaction_amount: f64,
-//     balance: f64,
-//     time_stamp: String,
-// ) -> Transaction {
-//     Transaction {
-//         s_no,
-//         transaction_type,
-//         transaction_amount,
-//         balance,
-//         time_stamp,
-//     }
-// }
-
-// instead of what you did above, there is a simple and more idiomatic way
-// to do this, using traits and impls. They're function associated with the
-// structure itself.
-
 impl Transaction {
     pub fn new(
         s_no: usize,
@@ -55,14 +35,6 @@ pub struct Data {
     pub user_name: String,
     pub amount: f32,
 }
-
-// pub fn build_user(s_no: usize, user_name: String, amount: f64) -> Data {
-//     Data {
-//         s_no,
-//         user_name,
-//         amount,
-//     }
-// }
 
 impl Data {
     pub fn new(s_no: usize, user_name: String, amount: f32) -> Self {
