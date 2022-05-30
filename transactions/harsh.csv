@@ -1,3 +1,4 @@
 s_no,transaction_type,transaction_amount,balance,time_stamp
 1,Credit,50.0,50.0,2022-5-26 11:40:35
 2,Credit,100.0,150.0,2022-5-26 11:40:54
+3,Debit,100.0,50.0,2022-5-26 11:43:13
